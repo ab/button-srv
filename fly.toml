@@ -10,6 +10,9 @@ primary_region = 'bos'
   builder = 'paketobuildpacks/builder:base'
   buildpacks = ['gcr.io/paketo-buildpacks/go']
 
+[build.args]
+  BP_KEEP_FILES = "templates/*.tmpl"
+
 [env]
   PORT = '8080'
 
