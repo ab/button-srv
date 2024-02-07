@@ -14,6 +14,9 @@ func setupRouter() *gin.Engine {
 
 	r.LoadHTMLGlob("templates/*.tmpl")
 
+	// Never use X-Forwarded-For
+	r.SetTrustedProxies(nil)
+
 	// Get client IP from fly.io header
 	// https://fly.io/docs/reference/runtime-environment/#fly-client-ip
 	r.TrustedPlatform = "Fly-Client-IP"
