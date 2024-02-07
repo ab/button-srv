@@ -8,36 +8,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-/*
-func main() {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-
-	}
-
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		log.Println("Request: %v\n", r)
-		data := map[string]string{
-			"Region": os.Getenv("FLY_REGION"),
-		}
-
-		t.ExecuteTemplate(w, "index.html.tmpl", data)
-	})
-
-	log.Println("listening on", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
-}
-*/
-
 func setupRouter() *gin.Engine {
 	// gin.DisableConsoleColor()  // Disable Console Color
 	r := gin.Default()
 
 	r.LoadHTMLGlob("templates/*.tmpl")
 
-	// TODO set trusted proxies to list of CIDR ranges
-	r.SetTrustedProxies(nil)
+	// Get client IP from fly.io header
+	// https://fly.io/docs/reference/runtime-environment/#fly-client-ip
+	r.TrustedPlatform = "Fly-Client-IP"
 
 	// Ping test
 	r.GET("/ping", func(c *gin.Context) {
@@ -65,7 +44,7 @@ func main() {
 	}
 
 	r := setupRouter()
-	// Listen and Server in 0.0.0.0:8080
+	// Listen and serve on 0.0.0.0:8080
 	log.Printf("Listening on port %v\n", port)
 	r.Run(":" + port)
 }
