@@ -48,6 +48,6 @@ func main() {
 
 	r := setupRouter()
 	// Listen and serve on 0.0.0.0:8080
-	log.Printf("Listening on port %v\n", port)
+	log.Printf("button-srv/gin listening on port %v\n", port)
 	r.Run(":" + port)
 }
