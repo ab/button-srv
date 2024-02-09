@@ -1,14 +1,13 @@
-package main
+package server
 
 import (
-	"log"
 	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
 )
 
-func setupRouter() *gin.Engine {
+func InitRouter() *gin.Engine {
 	// gin.DisableConsoleColor()  // Disable Console Color
 	r := gin.Default()
 
@@ -38,16 +37,4 @@ func setupRouter() *gin.Engine {
 	})
 
 	return r
-}
-
-func main() {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
-
-	r := setupRouter()
-	// Listen and serve on 0.0.0.0:8080
-	log.Printf("button-srv/gin listening on port %v\n", port)
-	r.Run(":" + port)
 }
